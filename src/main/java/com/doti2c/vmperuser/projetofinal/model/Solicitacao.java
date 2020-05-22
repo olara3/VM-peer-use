@@ -1,12 +1,15 @@
 package com.doti2c.vmperuser.projetofinal.model;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,10 +37,18 @@ public class Solicitacao {
 	
 	@ManyToOne
 	@JsonIgnoreProperties("pedidos")
-	private Usuario solicitante; // aque é a relacao da chave estrangeira com o usuario
+	private Usuario solicitante; // aqui é a relacao da chave estrangeira com o usuario
 	
+	@OneToMany(mappedBy  = "solicitacao", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("solicitacao")
+	private List<Item> itensSolicitacao;
 	
-	
+	public List<Item> getItensSolicitacao() {
+		return itensSolicitacao;
+	}
+	public void setItensSolicitacao(List<Item> itensSolicitacao) {
+		this.itensSolicitacao = itensSolicitacao;
+	}
 	public Usuario getSolicitante() {
 		return solicitante;
 	}
